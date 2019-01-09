@@ -3,6 +3,7 @@ const axios = require('axios');
 const getURL = 'https://interview.adpeai.com/api/v1/get-task';
 const postURL = 'https://interview.adpeai.com/api/v1/submit-task';
 
+// Helper function to get result of operation.
 function solveMathProblem(operation, value1, value2) {
   let answer = null;
 
@@ -29,6 +30,7 @@ function solveMathProblem(operation, value1, value2) {
   return answer;
 }
 
+// Retrieving and solving problem from API
 const getResult = async (gURL) => {
   try {
     const response = await axios.get(gURL);
@@ -44,6 +46,7 @@ const getResult = async (gURL) => {
   }
 };
 
+// Post request to the given URL to check if result is correct
 const postResult = async (pURL, id, result) => {
   try {
     const res = await axios.post(pURL, { id, result });
@@ -56,6 +59,8 @@ const postResult = async (pURL, id, result) => {
   }
 };
 
+// Running every 100 ms or just run once.
+// For testing, comment both calls out.
 setInterval(() => {
   getResult(getURL).then((data) => {
     postResult(postURL, data.id, data.result);
